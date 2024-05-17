@@ -3,7 +3,7 @@ const { AuthenticationError, signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    me: async (_, _, context) => {
+    me: async (_, __, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate('thoughts');
       }
@@ -34,30 +34,30 @@ const resolvers = {
 
       return { token, user };
     },
-  },
-  saveBook: async (_, { book }, context) => {
-    if (context.user) {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { savedBooks: book } },
-        { new: true }
-      );
-      return updatedUser;
-    }
-    throw AuthenticationError;
-  },
+    saveBook: async (_, { book }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedBooks: book } },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw AuthenticationError;
+    },
 
-  removeBook: async (_, { bookId }, context) => {
-    if (context.user) {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $pull: { savedBooks: { bookId } } },
-        { new: true }
-      );
+    removeBook: async (_, { bookId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedBooks: { bookId } } },
+          { new: true }
+        );
 
-      return updatedUser;
-    }
-    throw AuthenticationError;
+        return updatedUser;
+      }
+      throw AuthenticationError;
+    },
   },
 };
 
