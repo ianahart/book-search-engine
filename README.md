@@ -40,6 +40,7 @@ The book search engine is was a MERN applicationn utilizing a REST API. Our job 
 You can run this application locally by following the steps below. You can also visit the live website [here]()
 
 - Download Node.js at [Node.js](https://nodejs.org/en) if not already installed. You can check if it is installed by typing `node-v` in your command line.
+- Make sure you have [MongoDB](https://www.mongodb.com/try/download/community) installed.
 - Fork the repo to make a copy.
 - Next, clone the project using `git clone https://github.com/ianahart/book-search-engine.git`.
 - To install dependencies, make sure you're in the root of the project and run `npm run install`.
@@ -54,6 +55,9 @@ You can run this application locally by following the steps below. You can also 
 - On your saved books page is a list of all the books you've saved and you have the option to delete the ones you no longer wish to have in your list.
 
 ## Visuals
+
+<img width="650" alt="book_search_engine_screenshot" src="https://github.com/ianahart/book-search-engine/assets/29121238/a17f5666-eedb-4c75-bfe0-e4ea8523c042">
+
 
 ## Tests
 
