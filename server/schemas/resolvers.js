@@ -7,11 +7,11 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate('thoughts');
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw AuthenticationError;
     },
   },
   Mutation: {
-    login: async (parent, { email, password }) => {
+    login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -35,18 +35,30 @@ const resolvers = {
       return { token, user };
     },
   },
-    saveBook: async (_, {book}, context) => {
-           if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $addToSet: {savedBooks: book} },
-                    { new: true }
-                )
-                return updatedUser;
-            }
-            throw new AuthenticationError('You need to be logged in!')
-
+  saveBook: async (_, { book }, context) => {
+    if (context.user) {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { savedBooks: book } },
+        { new: true }
+      );
+      return updatedUser;
     }
+    throw AuthenticationError;
+  },
+
+  removeBook: async (_, { bookId }, context) => {
+    if (context.user) {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $pull: { savedBooks: { bookId } } },
+        { new: true }
+      );
+
+      return updatedUser;
+    }
+    throw AuthenticationError;
+  },
 };
 
 module.exports = resolvers;
